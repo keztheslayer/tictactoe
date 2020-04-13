@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1 v-if="$store.state.gameOver">
-            Game Over
+        <h1 v-if="winner">
+            The winner is: {{ winner }}
         </h1>
         <div class="box">
             <cell 
@@ -22,6 +22,11 @@ import combinations from './utils/combinations';
 export default {
     components : {
         Cell,
+    },
+    data() {
+        return {
+            winner : '',
+        };
     },
     computed : {
         ...mapGetters( [
@@ -65,11 +70,11 @@ export default {
             combinations.forEach( combo => {
                 if ( this.arrayContainsArray( this.AICheckedIDs, combo ) ) {
                     this.$store.state.gameOver = true;
-                    console.log('AI WIN');
+                    this.winner = 'AI';
                 }
                 else if ( this.arrayContainsArray( this.playerCheckedIDs, combo ) ) {
                     this.$store.state.gameOver = true;
-                    console.log('Player WIN');
+                    this.winner = 'Player';
                 }
             } );
         },
