@@ -14,6 +14,7 @@
         </div>
         <button
             v-if="gameOver"
+            class="button"
             @click="restart"
         >
             Restart
@@ -59,7 +60,8 @@ export default {
                 id     : cellId,
                 author : 'player', 
             } );
-            this.AIstep();
+
+            setTimeout( this.AIstep(), 1 );
             this.checkStatus();
         },
         AIstep() {
@@ -118,4 +120,40 @@ $hovered: darken($bgcolor, 10%);
     width: 600px;
     height: 600px;
 }
+
+.button{
+  display: block;
+  margin: 20px auto 0;
+  zoom: 1;
+  padding: 6px 20px;
+  cursor: pointer;
+  border: 1px solid #bbb;
+  overflow: visible;
+  font: bold 13px arial, helvetica, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #555;
+  background-color: #ddd;
+  background-image: linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+  transition: background-color .2s ease-out;
+  background-clip: padding-box;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+  text-shadow: 0 1px 0 rgba(255,255,255, .9);
+  user-select: none;
+}
+
+.button:hover{
+  background-color: #eee;
+  color: #555;
+}
+
+.button:active{
+  background: #e9e9e9;
+  position: relative;
+  top: 1px;
+  text-shadow: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+}
+
 </style>

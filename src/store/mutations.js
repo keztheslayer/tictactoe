@@ -24,7 +24,8 @@ export default {
             cell.isChecked = false;
             cell.checkedBy = '';
         } );
-        state.playerCheckedIDs = state.AICheckedIDs = [];
+        state.playerCheckedIDs = [];
+        state.AICheckedIDs = [];
         state.winner = '';
     },
     setWinner( state, whoWon ) {
