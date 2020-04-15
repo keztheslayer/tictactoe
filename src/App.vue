@@ -1,8 +1,11 @@
 <template>
     <div>
-        <h1 v-if="winner">
-            The winner is: {{ winner }}
+        <h1>
+            <center>Tic Tac Toe</center>
         </h1>
+        <h2 v-if="winner">
+            The winner is: {{ winner }}
+        </h2>
         <div class="box">
             <cell 
                 v-for="cell in cells"
