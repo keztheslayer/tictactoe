@@ -16,4 +16,18 @@ export default {
             state.AICheckedIDs.push( id );
         }
     },
+    restart( state ) {
+        state.gameOver = false;
+        state.counter = 1;
+        
+        state.cells.forEach( cell => {
+            cell.isChecked = false;
+            cell.checkedBy = '';
+        } );
+        state.playerCheckedIDs = state.AICheckedIDs = [];
+        state.winner = '';
+    },
+    setWinner( state, whoWon ) {
+        state.winner = whoWon;
+    },
 };

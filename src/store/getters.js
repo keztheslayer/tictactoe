@@ -17,4 +17,7 @@ export default {
     gameOver( state ) {
         return state.gameOver;
     },
+    winner( state ) {
+        return state.winner;
+    },
 };

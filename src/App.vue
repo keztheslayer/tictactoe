@@ -12,21 +12,24 @@
                 @click.native="go(cell.id)"
             />
         </div>
+        <button
+            v-if="gameOver"
+            @click="restart"
+        >
+            Restart
+        </button>
     </div>
 </template>
 <script>
 import Cell from './components/Cell.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import combinations from './utils/combinations';
+
+const maxSteps = 9;
 
 export default {
     components : {
         Cell,
-    },
-    data() {
-        return {
-            winner : '',
-        };
     },
     computed : {
         ...mapGetters( [
@@ -36,12 +39,17 @@ export default {
             'gameOver',
             'playerCheckedIDs',
             'AICheckedIDs',
+            'winner',
         ] ),
     },
     methods : {
         ...mapActions( [
             'check',
             'nextStep',
+        ] ),
+        ...mapMutations( [
+            'restart',
+            'setWinner',
         ] ),
         go( cellId ) {
             if ( this.gameOver ) {
@@ -68,15 +76,23 @@ export default {
         },
         checkStatus() {
             combinations.forEach( combo => {
-                if ( this.arrayContainsArray( this.AICheckedIDs, combo ) ) {
+                if ( this.arrayContainsArray( this.playerCheckedIDs, combo ) ) {
                     this.$store.state.gameOver = true;
-                    this.winner = 'AI';
+                    this.setWinner('Player');
+
+                    return;
                 }
-                else if ( this.arrayContainsArray( this.playerCheckedIDs, combo ) ) {
+
+                else if ( this.arrayContainsArray( this.AICheckedIDs, combo ) ) {
                     this.$store.state.gameOver = true;
-                    this.winner = 'Player';
+                    this.setWinner('AI');
                 }
             } );
+
+            if ( this.currentStep > maxSteps && !this.winner ) {
+                this.setWinner('Friendship!');
+                this.$store.state.gameOver = true;
+            }
         },
         arrayContainsArray( superset, subset ) {
             if ( subset.length === 0 ) {
